@@ -3,82 +3,151 @@
 
         <div class="table-responsive">
             <table class="table table-nowrap table-bordered new_drug_details">
-              	<thead>
-              		<tr>
-              			<th>Drug</th>
-              			<th>Dosage Form</th>
-              			<th>Dosage</th>
-                        <th>Drug Strength</th>
-              			<th>UOM</th>
-              			<th>Type</th>
-              			<th>Manufacture / Distribution By</th>
-              		</tr>
-              	</thead>
-                <tbody>
+                <thead>
+                    {{-- <tr>
+                        <th>Drug</th>
+                        <th>Dosage Form</th>
+                        <th>Dosage</th>
+                      <th>Drug Strength</th>
+                        <th>UOM</th>
+                        <th>Type</th>
+                        <th>Manufacture / Distribution By</th>
+                    </tr> --}}
+
                     <tr>
-                        <tbody >
-                            @if(!is_null($study->drugDetails))
-                                @foreach($study->drugDetails as $sk => $sv)
-                                    <tr class="removeRow">
-                                        <td>
-                                            <select class="form-control select2 select_drug" name="drug[{{ $sk }}][drug]" data-placeholder="Select Drug" required disabled>
-                                                <option value="">Select Drug</option>
-                                                @if (!is_null($drug))
-                                                    @foreach ($drug as $dk => $dv)
-                                                        <option @if($sv->drug_id == $dv->id) selected @endif value="{{ $dv->id }}">
-                                                            {{ $dv->drug_name }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2 select_dosage_form" name="drug[{{ $sk }}][dosage_form]" data-placeholder="Select Dosage Form" required disabled>
-                                                <option value="">Select Dosage Form</option>
-                                                @if(!is_null($dosageform->paraCode))
-                                                    @foreach($dosageform->paraCode as $dk => $dv)
-                                                        <option @if($sv->dosage_form_id == $dv->id) selected @endif value="{{ $dv->id }}">
-                                                            {{ $dv->para_value }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control width" name="drug[{{ $sk }}][dosage]" placeholder="Dosage" autocomplete="off" value="{{ $sv->dosage }}" required disabled />
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="drug_details" name="drug[{{ $sk }}][drug_strength]" placeholder="Drug Strength" autocomplete="off" value="{{ $sv->drug_strength }}" disabled />
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2 selectUOM" name="drug[{{ $sk }}][uom]" data-placeholder="Select UOM" required disabled>
-                                                <option value="">Select UOM</option>
-                                                @if(!is_null($uom->paraCode))
-                                                    @foreach($uom->paraCode as $uk => $uv)
-                                                        <option @if($sv->uom_id == $uv->id) selected @endif value="{{ $uv->id }}">
-                                                            {{ $uv->para_value }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2 selectType" name="drug[{{ $sk }}][type]" data-placeholder="Select Type" required disabled>
-                                                <option value="">Select Type</option>
-                                                <option @if($sv->type == 'TEST') selected @endif value="TEST">Test</option>
-                                                <option @if($sv->type == 'REFERENCE') selected @endif value="REFERENCE">Reference</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="drug[{{ $sk }}][manufacture]" id="manufacture" placeholder="Manufacture / Distribution By" autocomplete="off" value="{{ $sv->manufacturedby }}" required disabled />
-                                        </td>
-                                        
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </tr>
-                </tbody>
+                      <th>Drug</th>
+                      <th>Dosage From</th>
+                      <th>Dosage</th>
+                      <th>Drug Strength</th>
+                      <th>UOM</th>
+                      <th>Reference Type</th>
+                      <th>Manufacture / Distribution By</th>
+                      <th>Remark</th>
+                  </tr>
+                </thead>
+              <tbody>
+                  {{-- <tr> --}}
+                      {{-- <tbody > --}}
+                          @if(!is_null($study->drugDetails))
+                              @foreach($study->drugDetails as $sk => $sv)
+                                  {{-- <tr class="removeRow">
+                                      <td>
+                                          <select class="form-control select2 select_drug" name="drug[{{ $sk }}][drug]" data-placeholder="Select Drug" required disabled>
+                                              <option value="">Select Drug</option>
+                                              @if (!is_null($drug))
+                                                  @foreach ($drug as $dk => $dv)
+                                                      <option @if($sv->drug_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                          {{ $dv->drug_name }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <select class="form-control select2 select_dosage_form" name="drug[{{ $sk }}][dosage_form]" data-placeholder="Select Dosage Form" required disabled>
+                                              <option value="">Select Dosage Form</option>
+                                              @if(!is_null($dosageform->paraCode))
+                                                  @foreach($dosageform->paraCode as $dk => $dv)
+                                                      <option @if($sv->dosage_form_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                          {{ $dv->para_value }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" class="form-control width" name="drug[{{ $sk }}][dosage]" placeholder="Dosage" autocomplete="off" value="{{ $sv->dosage }}" required disabled />
+                                      </td>
+                                      <td>
+                                          <input type="text" class="form-control" id="drug_details" name="drug[{{ $sk }}][drug_strength]" placeholder="Drug Strength" autocomplete="off" value="{{ $sv->drug_strength }}" disabled />
+                                      </td>
+                                      <td>
+                                          <select class="form-control select2 selectUOM" name="drug[{{ $sk }}][uom]" data-placeholder="Select UOM" required disabled>
+                                              <option value="">Select UOM</option>
+                                              @if(!is_null($uom->paraCode))
+                                                  @foreach($uom->paraCode as $uk => $uv)
+                                                      <option @if($sv->uom_id == $uv->id) selected @endif value="{{ $uv->id }}">
+                                                          {{ $uv->para_value }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <select class="form-control select2 selectType" name="drug[{{ $sk }}][type]" data-placeholder="Select Type" required disabled>
+                                              <option value="">Select Type</option>
+                                              <option @if($sv->type == 'TEST') selected @endif value="TEST">Test</option>
+                                              <option @if($sv->type == 'REFERENCE') selected @endif value="REFERENCE">Reference</option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" class="form-control" name="drug[{{ $sk }}][manufacture]" id="manufacture" placeholder="Manufacture / Distribution By" autocomplete="off" value="{{ $sv->manufacturedby }}" required disabled />
+                                      </td>
+                                      
+                                  </tr> --}}
+
+                                  <tr class="removeRow">
+                                      <td>
+                                          <select class="form-control select_drug noValidate" name="drug[{{ $sk }}][drug]" id="drug_details" required disabled>
+                                              <option value="">Drug</option>
+                                              @if (!is_null($drug))
+                                                  @foreach ($drug as $dk => $dv)
+                                                      <option @if($sv->drug_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                          {{ $dv->drug_name }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <select class="form-control select_dosage_form noValidate" id="drug_dosage_form" name="drug[{{ $sk }}][dosage_form]" data-placeholder="Select Dosage Form" required disabled>
+                                              <option value="">Dosage Form</option>
+                                              @if(!is_null($dosageform->paraCode))
+                                                  @foreach($dosageform->paraCode as $dk => $dv)
+                                                      <option @if($sv->dosage_form_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                          {{ $dv->para_value }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" id="drug_strength" class="form-control dosage noValidate" name="drug[{{ $sk }}][dosage]" placeholder="Dose" autocomplete="off" value="{{ $sv->dosage }}" required disabled/>
+                                      </td>
+                                      <td>
+                                          <input type="text" id="drug_strength" class="form-control drug_strength noValidate" name="drug[{{ $sk }}][drug_strength]" placeholder="Drug Strength"  autocomplete="off" value="{{ $sv->drug_strength }}" disabled/>
+                                      </td>
+                                      <td>
+                                          <select class="form-control selectUOM noValidate" name="drug[{{ $sk }}][uom]" data-placeholder="Select UOM" id="drug_strength" required disabled>
+                                              <option value="">UOM</option>
+                                              @if(!is_null($uom->paraCode))
+                                                  @foreach($uom->paraCode as $uk => $uv)
+                                                      <option @if($sv->uom_id == $uv->id) selected @endif value="{{ $uv->id }}">
+                                                          {{ $uv->para_value }}
+                                                      </option>
+                                                  @endforeach
+                                              @endif
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <select class="form-control selectType noValidate" name="drug[{{ $sk }}][type]" id="drug_reference" data-placeholder="Select Type" required disabled>
+                                              <option value="">Type</option>
+                                              <option @if($sv->type == 'TEST') selected @endif value="TEST">Test</option>
+                                              <option @if($sv->type == 'REFERENCE') selected @endif value="REFERENCE">Reference</option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" class="form-control manufacture noValidate" name="drug[{{ $sk }}][manufacture]" id="manufacture" placeholder="Manufacture / Distribution By" autocomplete="off" value="{{ $sv->manufacturedby }}" required disabled/>
+                                      </td>
+                                      <td>
+                                          <input type="text" class="form-control remark noValidate" name="drug[{{ $sk }}][remark]" id="remark" placeholder="Remark" autocomplete="off" value="{{ $sv->remarks }}" required disabled/>
+                                      </td>
+                                  </tr>
+                              @endforeach
+                          @endif
+                      {{-- </tbody> --}}
+                  {{-- </tr> --}}
+              </tbody>
             </table>
         </div>
 
@@ -218,6 +287,7 @@
                 <div class="form-group mb-3">
                     <label>Clinical Word Location<span class="mandatory">*</span></label>
                     <select class="form-control select2 selectClinicalWordLocation" name="clinical_word_location" data-placeholder="Select Clinical Word Location" required disabled>
+                        <option @if($study->clinical_word_location == '7') selected @endif value={{ $study->clinical_word_location }}>NA</option>
                         @if(!is_null($clinicalWordLocation))
                             @foreach($clinicalWordLocation as $cwk => $cwv)
                                 <option @if($study->clinical_word_location == $cwv->id) selected @endif value="{{ $cwv->id }}">
@@ -371,6 +441,7 @@
                     <label>Bioanalytical Investigator<span class="mandatory">*</span></label>
                     <select class="form-control select2" name="bioanalytical_investigator" data-placeholder="Select Bioanalytical Investigator" required disabled>
                         <option value="">Select Bioanalytical Investigator</option>
+                        <option @if ($study->bioanalytical_investigator == '0') selected @endif value="0">NA</option>
                         @if(!is_null($bioanalytical->bioanalyticalInvestigator))
                             @foreach($bioanalytical->bioanalyticalInvestigator as $bk => $bv)
                                 <option @if($study->bioanalytical_investigator == $bv->id) selected @endif value="{{ $bv->id }}">

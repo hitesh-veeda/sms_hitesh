@@ -561,9 +561,9 @@ $(document).ready(function() {
             dosage_form: {
                 required: true,
             },
-            study_text: {
+            /*study_text: {
                 required: true,
-            },
+            },*/
             'scope[]': {
                 required: true,
             },
@@ -588,18 +588,18 @@ $(document).ready(function() {
             no_of_female_subjects: {
                 required: true,
             },
-            washout_period: {
+            /*washout_period: {
                 required: true,
-            },
+            },*/
             cr_location: {
                 required: true,
             },
-            clinical_word_location: {
+            /*clinical_word_location: {
                 required: true,
             },
             additional_requirement: {
                 required: true,
-            },
+            },*/
             quotation_amount: {
                 required: true,
             },
@@ -635,9 +635,9 @@ $(document).ready(function() {
             study_condition: {
                 required: true,
             },
-            priority: {
+            /*priority: {
                 required: true,
-            },
+            },*/
             no_of_groups: {
                 required: true,
             },
@@ -647,12 +647,12 @@ $(document).ready(function() {
             /*total_housing: {
                 required: true,
             },*/
-            pre_housing: {
+            /*pre_housing: {
                 required: true,
             },
             post_housing: {
                 required: true,
-            },
+            },*/
             br_location: {
                 required: true,
             },
@@ -674,9 +674,9 @@ $(document).ready(function() {
             principle_investigator: {
                 required: true,
             },
-            bioanalytical_investigator: {
+            /*bioanalytical_investigator: {
                 required: true,
-            },
+            },*/
             /*study_result: {
                 required: true,
             },*/
@@ -742,9 +742,9 @@ $(document).ready(function() {
             dosage_form:{
                 required: 'Please select dosage form',
             },
-            study_text: {
+            /*study_text: {
                 required: "Please enter study text",
-            },
+            },*/
             'scope[]': {
                 required: "Please select scope",
             },
@@ -769,18 +769,18 @@ $(document).ready(function() {
             no_of_female_subjects: {
                 required: "Please enter no of female subjects",
             },
-            washout_period: {
+            /*washout_period: {
                 required: "Please enter washout period",
-            },
+            },*/
             cr_location: {
                 required: "Please select cr location",
             },
-            clinical_word_location: {
+            /*clinical_word_location: {
                 required: "Please select clinical word location"
             },
             additional_requirement: {
                 required: "Please enter additional requirement",
-            },
+            },*/
             quotation_amount: {
                 required: "Please enter quotation amount",
             },
@@ -812,9 +812,9 @@ $(document).ready(function() {
             study_condition: {
                 required: "Please select study condition",
             },
-            priority: {
+            /*priority: {
                 required: "Please select priority",
-            },
+            },*/
             no_of_groups: {
                 required: "Please enter no of groups"
             },
@@ -824,12 +824,12 @@ $(document).ready(function() {
             /*total_housing: {
                 required: "Please enter total housing",
             },*/
-            pre_housing: {
+            /*pre_housing: {
                 required: "Please enter pre housing"
             },
             post_housing: {
                 required: "Please enter post housing"
-            },
+            },*/
             br_location: {
                 required: "Please select br location"
             },
@@ -851,9 +851,9 @@ $(document).ready(function() {
             principle_investigator: {
                 required: "Please select principle investigator"
             },
-            bioanalytical_investigator: {
+            /*bioanalytical_investigator: {
                 required: "Please select bioanalytical investigator"
-            },
+            },*/
             /*study_result: {
                 required: "Please select study result"
             },*/

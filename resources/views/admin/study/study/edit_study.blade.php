@@ -551,7 +551,7 @@
 
                             <div class="form-group mb-3">
                                 <label>Principle Investigator<span class="mandatory">*</span></label>
-                                <select class="form-control select2" id="principle_investigator" name="principle_investigator" data-placeholder="Select Principle Investigator" required>
+                                <select class="form-control select2 principleInvestigator" id="principle_investigator" name="principle_investigator" data-placeholder="Select Principle Investigator" required>
                                     <option value="">Select Principle Investigator</option>
                                     @if(!is_null($principle->principleInvestigator))
                                         @if($study->principle_investigator == 0)
@@ -571,6 +571,7 @@
                                         @endif
                                     @endif
                                 </select>
+                                <span id="selectPrinciple"></span>
                             </div>
 
                             <div class="form-group mb-3">

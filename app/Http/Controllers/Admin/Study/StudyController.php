@@ -681,12 +681,6 @@ class StudyController extends GlobalController
                                     ->orderBy('location_name')
                                     ->get();
 
-        // $crClinicalWard = ClinicalWardMaster::select('id', 'location_id', 'ward_name')
-        //                                     ->where('ward_name', 'NA')
-        //                                     ->where('is_active', 1)
-        //                                     ->where('is_delete', 0)
-        //                                     ->first();
-
         $projectManager = Role::select('id')
                               ->whereIn('id', ['2', '3'])
                               ->with([
@@ -900,9 +894,9 @@ class StudyController extends GlobalController
             $project->special_notes = $request->special_notes;
         }
 
-        // if(isset($request->remark) && $request->remark != ''){
-        //     $project->remark = $request->remark;
-        // }
+        if(isset($request->remark) && $request->remark != ''){
+            $project->remark = $request->remark;
+        }
 
 
         /*if($request->token_number != ''){
@@ -978,9 +972,9 @@ class StudyController extends GlobalController
             $projectTrail->special_notes = $request->special_notes;
         }
 
-        // if(isset($request->remark) && $request->remark != ''){
-        //     $projectTrail->remark = $request->remark;
-        // }
+        if(isset($request->remark) && $request->remark != ''){
+            $projectTrail->remark = $request->remark;
+        }
 
         if(isset($request->cdisc_require) && $request->cdisc_require != '') {
             $projectTrail->cdisc_require = $request->cdisc_require;
@@ -1313,10 +1307,6 @@ class StudyController extends GlobalController
                                         }
                                   ])
                                   ->first();
-                                
-        // echo "<pre>";
-        // print_r($bioanalytical->toArray());
-        // exit;
 
         $scopeId = array();
         if (!is_null($study->studyScope)) {
@@ -1705,6 +1695,7 @@ class StudyController extends GlobalController
                 $drug->uom_id = $dv['uom'];
                 $drug->type = $dv['type'];
                 $drug->manufacturedby = $dv['manufacture'];
+                $drug->remarks = $dv['remark'];
                 $drug->updated_by_user_id = Auth::guard('admin')->user()->id;
                 $drug->save();
 
@@ -1718,6 +1709,7 @@ class StudyController extends GlobalController
                 $drugTrail->uom_id = $dv['uom'];
                 $drugTrail->type = $dv['type'];
                 $drugTrail->manufacturedby = $dv['manufacture'];
+                $drugTrail->remarks = $dv['remark'];
                 $drugTrail->updated_by_user_id = Auth::guard('admin')->user()->id;
                 $drugTrail->save();
             }
@@ -2086,6 +2078,7 @@ class StudyController extends GlobalController
                     $drug->uom_id = $dv->uom_id;
                     $drug->type = $dv->type;
                     $drug->manufacturedby = $dv->manufacturedby;
+                    $drug->remarks = $dv->remarks;
                     $drug->created_by_user_id = Auth::guard('admin')->user()->id;
                     $drug->save();
 
@@ -2099,6 +2092,7 @@ class StudyController extends GlobalController
                     $drugTrail->uom_id = $dv->uom_id;
                     $drugTrail->type = $dv->type;
                     $drugTrail->manufacturedby = $dv->manufacturedby;
+                    $drugTrail->remarks = $dv->remarks;
                     $drugTrail->created_by_user_id = Auth::guard('admin')->user()->id;
                     $drugTrail->save();
                 }
