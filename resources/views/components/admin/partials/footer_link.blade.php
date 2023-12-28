@@ -139,7 +139,7 @@
 
 @if (\Route::is('admin.studyCalendarList'))
     <script src="https://cdn.jsdelivr.net/chance/1.0/chance.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> --}}
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
     <script type="text/javascript" src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script type="text/javascript" src="{{ asset('libs/tui-dom/tui-dom.min.js') }}"></script>

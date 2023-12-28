@@ -10,6 +10,9 @@
         color: blue;
         font-weight: 500;
     }
+    #row {
+        --bs-gutter-x: 0px;
+    }
 </style>
 <div class="page-content">
     <div class="container-fluid">
@@ -40,10 +43,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
-                        <span style="color:red;float:right;" class="pull-right">* is mandatory</span>
-                    </div><br>
+                        <span style="color:red;float:right;">* is mandatory</span>
+                    </div>
 
-                    <div class="py-2 mt-3 row">
+                    <div class="py-2 mt-3 row" id="row">
                         <h3 class="font-size-15 font-weight-bold">
                             Drug Details
                             {{-- <a href="javascript:void(0);" class="text-primary addNewDrug form-group float-right" data-toggle="tooltip" data-id="1" data-value="0" data-placement="top" title="" >

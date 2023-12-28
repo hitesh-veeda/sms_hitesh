@@ -8,6 +8,9 @@
     #select2-sponsor-container, #select2-study_type-container, #select2-study_design-container, #select2-complexity-container, #select2-study_sub_type-container, #select2-study_condition-container, #select2-subject_type-container, #select2-priority-container, #select2-blinding_status-container, #select2-br_location-container, #select2-cr_location-container, #select2-clinical_word_location-container, #select2-principle_investigator-container, #select2-bioanalytical_investigator-container, #select2-study_result-container,#select2-project_manager-container, #select2-special_notes-container, #study_text, #drug_details, #select2-drug_details-container,#select2-drug_dosage_form-container,#select2-drug_strength-container,#select2-drug_reference-container,#drug_strength,#drug_reference,#drug_dosage_form,#remark {
         color: blue;
     }
+    #row {
+        --bs-gutter-x: 0px;
+    }
 </style>
 <div class="page-content">
     <div class="container-fluid">
@@ -37,12 +40,16 @@
 
             <div class="card">
                 <div class="card-body">
-                    <div class="py-2 mt-3 row">
+                    <div class="form-group">
+                        <span style="color:red;float:right;">* is mandatory</span>
+                    </div>
+
+                    <div class="py-2 mt-3 row" id="row">
                         <h3 class="font-size-15 font-weight-bold">
                             Drug Details
-                            <a href="javascript:void(0);" class="text-primary addNewDrug form-group float-right" data-toggle="tooltip" data-id="{{ $study->drug_details_count }}" data-value="0" data-placement="top" title="" >
+                            {{-- <a href="javascript:void(0);" class="text-primary addNewDrug form-group float-right" data-toggle="tooltip" data-id="{{ $study->drug_details_count }}" data-value="0" data-placement="top" title="" >
                                 <i class="mdi mdi-plus font-size-20"></i>
-                            </a>
+                            </a> --}}
                         </h3>
                     </div>
 
@@ -58,9 +65,20 @@
                                     <th>Manufacture / Distribution By</th>
                                     <th></th>
                                 </tr> -->
+                                <tr>
+                                    <th>Drug</th>
+                                    <th>Dosage From</th>
+                                    <th>Dosage</th>
+                                    <th>Drug Strength</th>
+                                    <th>UOM</th>
+                                    <th>Reference Type</th>
+                                    <th>Manufacture / Distribution By</th>
+                                    <th>Remark</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <tbody >
                                         @if(!is_null($study->drugDetails))
                                             @foreach($study->drugDetails as $sk => $sv)
@@ -127,7 +145,87 @@
                                             @endforeach
                                         @endif
                                     </tbody>
-                                </tr>
+                                </tr> --}}
+
+                                @if(!is_null($study->drugDetails))
+                                    @foreach($study->drugDetails as $sk => $sv)
+                                        <tr @if(!$loop->first) class='removeRow' @endif>
+                                            <td>
+                                                <select class="form-select select_drug noValidate" name="drug[{{ $sk }}][drug]" id="drug_details" required>
+                                                    <option value="">Drug</option>
+                                                    @if (!is_null($drug))
+                                                        @foreach ($drug as $dk => $dv)
+                                                            <option @if($sv->drug_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                                {{ $dv->drug_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <span class="select_drug_error" style="color: red; display: none;">Please select drug</span>
+                                            </td>
+                                            <td>
+                                                <select class="form-select select_dosage_form noValidate" id="drug_dosage_form" name="drug[{{ $sk }}][dosage_form]" data-placeholder="Select Dosage Form" required>
+                                                    <option value="">Dosage Form</option>
+                                                    @if(!is_null($dosageform->paraCode))
+                                                        @foreach($dosageform->paraCode as $dk => $dv)
+                                                            <option @if($sv->dosage_form_id == $dv->id) selected @endif value="{{ $dv->id }}">
+                                                                {{ $dv->para_value }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <span class="select_dosage_form_error" style="color: red; display: none;">Please select dosage form</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="drug_strength" class="form-control dosage noValidate" name="drug[{{ $sk }}][dosage]" placeholder="Dose" autocomplete="off" value="{{ $sv->dosage }}" required/>
+                                                <span class="dosage_error" style="color: red; display: none;">Please enter dose</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="drug_strength" class="form-control drug_strength noValidate" name="drug[{{ $sk }}][drug_strength]" placeholder="Drug Strength"  autocomplete="off" value="{{ $sv->drug_strength }}"/>
+                                            </td>
+                                            <td>
+                                                <select class="form-select selectUOM noValidate" name="drug[{{ $sk }}][uom]" data-placeholder="Select UOM" id="drug_strength" required>
+                                                    <option value="">UOM</option>
+                                                    @if(!is_null($uom->paraCode))
+                                                        @foreach($uom->paraCode as $uk => $uv)
+                                                            <option @if($sv->uom_id == $uv->id) selected @endif value="{{ $uv->id }}">
+                                                                {{ $uv->para_value }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <span class="select_uom_error" style="color: red; display: none;">Please select uom</span>
+                                            </td>
+                                            <td>
+                                                <select class="form-select selectType noValidate" name="drug[{{ $sk }}][type]" id="drug_reference" data-placeholder="Select Type" required>
+                                                    <option value="">Type</option>
+                                                    <option @if($sv->type == 'TEST') selected @endif value="TEST">Test</option>
+                                                    <option @if($sv->type == 'REFERENCE') selected @endif value="REFERENCE">Reference</option>
+                                                </select>
+                                                <span class="select_type_error" style="color: red; display: none;">Please select drug reference</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control manufacture noValidate" name="drug[{{ $sk }}][manufacture]" id="manufacture" placeholder="Manufacture / Distribution By" autocomplete="off" value="{{ $sv->manufacturedby }}" required/>
+                                                <span class="manufacture_error" style="color: red; display: none;">Please enter manufacture</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control remark noValidate" name="drug[{{ $sk }}][remark]" id="remark" placeholder="Remark" autocomplete="off" value="{{ $sv->remarks }}" required/>
+                                                <span class="remark_error" style="color: red; display: none;">Please enter remark</span>
+                                            </td>
+                                            <td>
+                                                @if ($loop->first)
+                                                    <a href="javascript:void(0);" class="text-primary addNewDrug form-group" data-toggle="tooltip" data-id="{{ $study->drug_details_count }}" data-value="0" data-placement="top" title="" >
+                                                        <i class="mdi mdi-plus font-size-20"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="javascript:void(0);" class="text-danger remove" data-toggle="tooltip" data-id="{{ $sk }}"  data-placement="top" title="" data-original-title="Remove">
+                                                        <i class="mdi mdi-close font-size-20"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -266,7 +364,7 @@
 
                             <div class="form-group mb-3">
                                 <label>Washout Period(In Days)<span class="mandatory">*</span></label>
-                                <input type="text" class="form-control width" name="washout_period" id="washout_period" placeholder="Washout Period" autocomplete="off" value="{{ $study->washout_period }}" required/>
+                                <input type="text" class="form-control width" name="washout_period" id="washout_period" placeholder="Washout Period" autocomplete="off" value="{{ $study->washout_period }}" required readonly/>
                             </div>
 
                             <div class="form-group mb-3">
@@ -284,7 +382,8 @@
 
                             <div class="form-group mb-3">
                                 <label>Clinical Ward Location<span class="mandatory">*</span></label>
-                                <select class="form-control select2 selectClinicalWordLocation" id="clinical_word_location" name="clinical_word_location" data-placeholder="Select Clinical Ward Location" required>
+                                <select class="form-control select2 selectClinicalWordLocation" id="clinical_word_location" name="clinical_word_location" data-placeholder="Select Clinical Ward Location" required disabled>
+                                    <option @if($study->clinical_word_location == '7') selected @endif value={{ $study->clinical_word_location }}>NA</option>
                                     @if(!is_null($clinicalWordLocation))
                                         @foreach($clinicalWordLocation as $cwk => $cwv)
                                             <option @if($study->clinical_word_location == $cwv->id) selected @endif value="{{ $cwv->id }}">
@@ -293,12 +392,13 @@
                                         @endforeach
                                     @endif
                                 </select>
+                                <input type="hidden" name="clinical_word_location" id="clinical_word_location" value="{{ $study->clinical_word_location }}">
                                 <span id="selectClinicalWordLocation"></span>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label>Additional Requirement<span class="mandatory">*</span></label>
-                                <input type="text" class="form-control" name="additional_requirement" id="additional_requirement" placeholder="Additional Requirement" autocomplete="off" value="{{ $study->additional_requirement }}" required/>
+                                <input type="text" class="form-control" name="additional_requirement" id="additional_requirement" placeholder="Additional Requirement" autocomplete="off" value="{{ $study->additional_requirement }}" required readonly/>
                             </div>
 
                             <!-- <div class="form-group mb-3">
@@ -308,7 +408,7 @@
 
                             <div class="form-group mb-3">
                                 <label>Study Title / Protocol Title<span class="mandatory">*</span></label>
-                                <textarea class="form-control" name="study_text" id="study_text" placeholder="Study Title / Protocol Title" required>{{ $study->study_text }}</textarea>
+                                <textarea class="form-control" name="study_text" id="study_text" placeholder="Study Title / Protocol Title" required readonly>{{ $study->study_text }}</textarea>
                             </div>
 
                             <div class="form-group mb-3">
@@ -436,7 +536,7 @@
 
                             <div class="form-group mb-3">
                                 <label>Priority<span class="mandatory">*</span></label>
-                                <select class="form-control select2 selectPriority" name="priority" id="priority" data-placeholder="Select Priority" required>
+                                <select class="form-control select2 selectPriority" name="priority" id="priority" data-placeholder="Select Priority" required disabled>
                                     <option value="">Select Priority</option>
                                     @if(!is_null($priority->paraCode))
                                         @foreach($priority->paraCode as $pk => $pv)
@@ -446,6 +546,7 @@
                                         @endforeach
                                     @endif
                                 </select>
+                                <input type="hidden" name="priority" id="priority" value="{{ $study->priority }}">
                                 <span id="selectPriority"></span>
                             </div>
 
@@ -466,12 +567,12 @@
 
                             <div class="form-group mb-3">
                                 <label>Pre Housing (In Hours)<span class="mandatory">*</span></label>
-                                <input type="text" class="form-control width" name="pre_housing" id="total_housing" placeholder="Pre Housing" autocomplete="off" value="{{ $study->pre_housing }}" required/>
+                                <input type="text" class="form-control width" name="pre_housing" id="total_housing" placeholder="Pre Housing" autocomplete="off" value="{{ $study->pre_housing }}" required readonly/>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label>Post Housing (In Hours)<span class="mandatory">*</span></label>
-                                <input type="text" class="form-control width" name="post_housing" id="total_housing" placeholder="Post Housing" autocomplete="off" value="{{ $study->post_housing }}" required/>
+                                <input type="text" class="form-control width" name="post_housing" id="total_housing" placeholder="Post Housing" autocomplete="off" value="{{ $study->post_housing }}" required readonly/>
                             </div>
 
                             <div class="form-group mb-3">
@@ -531,12 +632,14 @@
                                         @endif
                                     @endif
                                 </select>
+                                <span id="selectPrinciple"></span>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label>Bioanalytical Investigator<span class="mandatory">*</span></label>
-                                <select class="form-control select2" id="bioanalytical_investigator" name="bioanalytical_investigator" data-placeholder="Select Bioanalytical Investigator" required>
+                                <select class="form-control select2" id="bioanalytical_investigator" name="bioanalytical_investigator" data-placeholder="Select Bioanalytical Investigator" required disabled>
                                     <option value="">Select Bioanalytical Investigator</option>
+                                    <option @if ($study->bioanalytical_investigator == '0') selected @endif value="0">NA</option>
                                     @if(!is_null($bioanalytical->bioanalyticalInvestigator))
                                         @if($study->bioanalytical_investigator == 0)
                                             <option value="0" selected>NA</option>
@@ -555,6 +658,7 @@
                                         @endif
                                     @endif
                                 </select>
+                                <input type="hidden" name="bioanalytical_investigator" id="bioanalytical_investigator" value="{{ $study->bioanalytical_investigator }}">
                             </div>
 
                             <div class="form-group mb-3"><label>Special Notes</label>
@@ -633,7 +737,7 @@
 
 @endsection
 
-@section('js')
+{{-- @section('js')
     <script type="text/javascript">
 
         $(document).on('click','.removeDrug',function(){ 
@@ -684,4 +788,4 @@
         });
 
     </script>
-@endsection
+@endsection --}}

@@ -462,13 +462,7 @@ $("#addProject").submit(function(e){
     var femaleSubjects = parseInt($('.femaleSubject').val());
     var maleSubjects = parseInt($('.maleSubject').val());
     var maleFemale = maleSubjects + femaleSubjects;
-    var isDrugValid = false;
-    var isDosageFormValid = false;
-    var isDosageValid = false;
-    var isUOMValid = false;
-    var isTypeValid = false;
-    var isManufactureValid = false;
-    var isRemarkValid = false;
+    var isFormValid = true;
 
     if(totalSubjects == maleFemale){
     } else {
@@ -480,10 +474,9 @@ $("#addProject").submit(function(e){
     $('.select_drug').each(function(){
 
         if($(this).val() != '') {
-            isDrugValid = true;
             $(this).next('span.select_drug_error').hide();
         } else {
-            isDrugValid = false;
+            isFormValid = false;
             $(this).next('span.select_drug_error').show();
         }
     });
@@ -491,10 +484,9 @@ $("#addProject").submit(function(e){
     $('.select_dosage_form').each(function(){
 
         if($(this).val() != '') {
-            isDosageFormValid = true;
             $(this).next('span.select_dosage_form_error').hide();
         } else { 
-            isDosageFormValid = false;
+            isFormValid = false;
             $(this).next('span.select_dosage_form_error').show();
         }
     });
@@ -502,10 +494,9 @@ $("#addProject").submit(function(e){
     $('.dosage').each(function(){
 
         if($(this).val().trim() != '') {
-            isDosageValid = true;
             $(this).next('span.dosage_error').hide();
         } else { 
-            isDosageValid = false;
+            isFormValid = false;
             $(this).next('span.dosage_error').show();
         }
     });
@@ -513,10 +504,9 @@ $("#addProject").submit(function(e){
     $('.selectUOM').each(function(){
 
         if($(this).val() != '') {
-            isUOMValid = true;
             $(this).next('span.select_uom_error').hide();
         } else { 
-            isUOMValid = false;
+            isFormValid = false;
             $(this).next('span.select_uom_error').show();
         }
     });
@@ -524,10 +514,9 @@ $("#addProject").submit(function(e){
     $('.selectType').each(function(){
 
         if($(this).val() != '') {
-            isTypeValid = true;
             $(this).next('span.select_type_error').hide();
         } else {
-            isTypeValid = false;
+            isFormValid = false;
             $(this).next('span.select_type_error').show();
         }
     });
@@ -535,10 +524,9 @@ $("#addProject").submit(function(e){
     $('.manufacture').each(function(){
 
         if($(this).val().trim() != '') {
-            isManufactureValid = true;
             $(this).next('span.manufacture_error').hide();
         } else {
-            isManufactureValid = false;
+            isFormValid = false;
             $(this).next('span.manufacture_error').show();
         }
     });
@@ -546,15 +534,12 @@ $("#addProject").submit(function(e){
     $('.remark').each(function(){
 
         if($(this).val().trim() != '') {
-            isRemarkValid = true;
             $(this).next('span.remark_error').hide();
         } else { 
-            isRemarkValid = false;
+            isFormValid = false;
             $(this).next('span.remark_error').show();
         }
     });
-
-    var isFormValid = ((isDrugValid) && (isDosageFormValid) && (isDosageValid) && (isUOMValid) && (isTypeValid) && (isManufactureValid) && (isRemarkValid));
 
     if(!isFormValid) {
         e.preventDefault();
